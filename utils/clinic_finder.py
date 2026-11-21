@@ -21,7 +21,7 @@ CURATED_HOSPITAL_BOOKING = {
         "Tổng đài đặt lịch khám: 1900 7178 (Khoa Nội tiết)",
         "https://www.bvdaihoc.com.vn/",
     ),
-   "bệnh viện chợ rẫy": (
+    "bệnh viện chợ rẫy": (
         "028 3855 4137",
         "Tổng đài đặt lịch: 1080 hoặc 028 3855 4137 (Khoa Nội tiết)",
         "https://bvchoray.vn/",
@@ -158,10 +158,10 @@ CURATED_HOSPITAL_BOOKING = {
     ),
 
     # --- BÌNH DƯƠNG & BÀ RỊA - VŨNG TÀU ---
-   "bệnh viện đa khoa tỉnh bình dương": (
+    "bệnh viện đa khoa tỉnh bình dương": (
         "0274 3822 920",
         "Tổng đài CSKH: 0274 3822 920 (Khoa Nội tiết)",
-        "https://benhvienbinhduong.org.vn//",
+        "https://benhvienbinhduong.org.vn/",
     ),
     "bệnh viện đa khoa quốc tế becamex": (
         "1900 2676",
@@ -1337,7 +1337,32 @@ def render_clinic_finder():
             )
             if map_points:
                 df_map = pd.DataFrame(map_points).drop_duplicates()
-                st.map(df_map[["lat", "lon"]], color="#EF4444", size=65, use_container_width=True)
+                try:
+                    import pydeck as pdk
+
+                    layer = pdk.Layer(
+                        "ScatterplotLayer",
+                        data=df_map,
+                        get_position=["lon", "lat"],
+                        get_color=[239, 68, 68, 220],
+                        get_radius=120,
+                        pickable=False,
+                    )
+                    view_state = pdk.ViewState(
+                        latitude=float(df_map["lat"].mean()),
+                        longitude=float(df_map["lon"].mean()),
+                        zoom=12,
+                    )
+                    st.pydeck_chart(
+                        pdk.Deck(
+                            map_style=pdk.map_styles.CARTO_LIGHT,
+                            initial_view_state=view_state,
+                            layers=[layer],
+                        ),
+                        use_container_width=True,
+                    )
+                except Exception:
+                    st.map(df_map[["lat", "lon"]], color="#EF4444", size=65, use_container_width=True)
             else:
                 st.info(
                     tr(
