@@ -222,6 +222,26 @@ h1, h2, h3 {{
     letter-spacing: -0.02em;
 }}
 
+/* ============ LIGHT MODE LOCK FOR SELECTBOX & MAIN RADIO ============ */
+[data-testid="stMain"] div[data-baseweb="select"] > div,
+[data-testid="stMain"] div[data-baseweb="select"] input,
+ul[data-testid="stSelectboxVirtualDropdown"],
+ul[data-testid="stSelectboxVirtualDropdown"] li {{
+    background-color: #FFFFFF !important;
+    color: #142D4E !important;
+    border-color: #DCE5F2 !important;
+}}
+[data-testid="stMain"] div[data-baseweb="select"] svg {{
+    fill: #142D4E !important;
+    color: #142D4E !important;
+}}
+[data-testid="stMain"] div[data-testid="stRadio"]:not([class*="st-key-sb_"]) label,
+[data-testid="stMain"] div[data-testid="stRadio"]:not([class*="st-key-sb_"]) label p,
+[data-testid="stMain"] div[data-testid="stRadio"]:not([class*="st-key-sb_"]) div[role="radiogroup"] label span {{
+    color: #142D4E !important;
+    opacity: 1 !important;
+}}
+
 /* ============ SIDEBAR ============ */
 section[data-testid="stSidebar"] {{
     min-width: 300px !important;
